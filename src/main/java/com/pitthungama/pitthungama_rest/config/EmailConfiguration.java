@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class EmailConfiguration {
+
     @Bean
     public SpringTemplateEngine springTemplateEngine() {
         SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
