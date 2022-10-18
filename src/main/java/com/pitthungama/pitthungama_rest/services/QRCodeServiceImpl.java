@@ -32,4 +32,9 @@ public class QRCodeServiceImpl implements QRCodeService{
         }
         return null;
     }
+
+    @Override
+    public void printQRCode(String qrContent, int width, int height) {
+
+    }
 }

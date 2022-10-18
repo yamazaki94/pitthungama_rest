@@ -23,6 +23,26 @@ spring:
                         enable: true
         protocol: smtp
         test-connection: false
+    autoconfigure:
+        exclude:
+            - org.springframework.cloud.aws.autoconfigure.context.ContextInstanceDataAutoConfiguration
+            - org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
+            - org.springframework.cloud.aws.autoconfigure.context.ContextRegionProviderAutoConfiguration
 
 app-config:
     thymeleaf-template-assets-path:
+
+cloud:
+    aws:
+        region:
+            static: ap-southeast-1
+            auto: false
+        stack:
+            auto: false
+        credentials:
+            access-key: AKIAS75GJ5LXU7JQ6XOJ
+            secret-key: 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
+
+application:
+    amazons3bucket:
+        name: pitthungamabucket

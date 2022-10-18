@@ -3,6 +3,7 @@ package com.pitthungama.pitthungama_rest.controller;
 import com.pitthungama.pitthungama_rest.model.EmailRequestBody;
 import com.pitthungama.pitthungama_rest.services.EmailSenderService;
 import com.pitthungama.pitthungama_rest.services.QRCodeService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -25,16 +27,15 @@ public class EmailController {
 
     @Autowired EmailSenderService emailService;
 
+    private org.slf4j.Logger LOGGER = LoggerFactory.getLogger(getClass());
+
     @PostMapping(value = "/sendEmail")
     public ResponseEntity<?> generateQRCode (@RequestBody EmailRequestBody requestBody) throws IOException, MessagingException {
 
-        byte[] qrCode = qrCodeService.generateQRCode(requestBody.ticketCode, 500, 500);
-
-        String base64EncodedImageBytes = Base64.getEncoder().encodeToString(qrCode);
-
         Context emailBodyData = new Context();
         Map<String, Object> variable = new HashMap<String, Object>();
-        variable.put("baseImage", base64EncodedImageBytes);
+        String imageUrl = "https://pitthungamabucket.s3.ap-southeast-1.amazonaws.com/"+ requestBody.ticketCode + ".jpeg";
+        variable.put("imageUrl", imageUrl);
         variable.put("receiverName", requestBody.receiverName);
         variable.put("participants", requestBody.participants);
         variable.put("payment", requestBody.payment);
